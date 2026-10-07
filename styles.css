@@ -1,7 +1,7 @@
 html,
 body {
   width: 100%;
-  min-width: 320px;
+  min-width: 0;
   height: 100%;
   overflow: hidden;
   background: transparent !important;
@@ -229,7 +229,7 @@ label {
 
 @media (max-width: 760px) {
   .app-showcase {
-    --phone-w: clamp(238px, 72vw, 304px);
+    --phone-w: clamp(224px, 70vw, 286px);
     align-items: start;
     padding: 12px 16px 16px;
   }
@@ -260,7 +260,9 @@ label {
   }
 
   .slide-nav {
-    width: min(100%, 288px);
+    grid-template-columns: auto minmax(30px, auto) auto;
+    justify-content: center;
+    width: min(100%, 278px);
   }
 
   .nav-button {
@@ -287,11 +289,28 @@ label {
 
 @media (max-width: 360px) {
   .app-showcase {
-    --phone-w: 232px;
-    padding-inline: 12px;
+    --phone-w: clamp(218px, 69vw, 232px);
+    padding-inline: 10px;
   }
 
   .theme-option {
+    font-size: 0.8rem;
+  }
+
+  .slide-nav {
+    gap: 8px;
+    width: min(100%, 258px);
+  }
+
+  .nav-button {
+    gap: 6px;
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .slide-count {
+    min-width: 30px;
     font-size: 0.8rem;
   }
 }
