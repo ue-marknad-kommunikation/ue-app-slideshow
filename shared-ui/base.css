@@ -1,0 +1,232 @@
+/* ============================================================
+   base.css – Grundläggande element för Umeå Energi verktyg
+   ============================================================
+   Förutsätter att tokens.css redan är laddad.
+   Innehåller: reset, typografi, grundelement, tillgänglighet.
+   ============================================================ */
+
+@layer base {
+
+/* ---------------------------------------------------------
+   Fonter – Borna (Umeå Energi varumärkesfont)
+   woff2-filer ingår i shared-ui/fonts/.
+   Om de ligger annorlunda i ditt projekt, överstyr @font-face
+   i din lokala CSS (utanför @layer).
+   --------------------------------------------------------- */
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Borna";
+  src: url("fonts/Borna-SemiboldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------
+   Reset – minimal, praktisk
+   --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--ui-bg);
+  color: var(--ui-fg);
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------------------------------------------------
+   Rubriker (UI-kontext, inte dokumenttypografi)
+   --------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: var(--ui-fg);
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+h5 { font-size: var(--text-md); }
+h6 { font-size: var(--text-base); }
+
+/* ---------------------------------------------------------
+   Brödtext och inline-element
+   --------------------------------------------------------- */
+p {
+  line-height: var(--leading-normal);
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+strong, b {
+  font-weight: var(--font-semibold);
+}
+
+/* ---------------------------------------------------------
+   Länkar
+   --------------------------------------------------------- */
+a {
+  color: var(--ui-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--ui-primary-hover);
+}
+
+/* ---------------------------------------------------------
+   Listor
+   --------------------------------------------------------- */
+ul, ol {
+  padding-left: 1.5em;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+/* ---------------------------------------------------------
+   Bilder
+   --------------------------------------------------------- */
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* ---------------------------------------------------------
+   Formulärelement – grundnivå
+   --------------------------------------------------------- */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ---------------------------------------------------------
+   Tabeller – grundnivå
+   --------------------------------------------------------- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Horisontell linje
+   --------------------------------------------------------- */
+hr {
+  border: 0;
+  border-top: 1px solid var(--ui-border);
+  margin: var(--space-4) 0;
+}
+
+/* ---------------------------------------------------------
+   Fokusmarkeringar – tillgänglighet
+   --------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* Ta bort standardfokus för mus men behåll för tangentbord */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------------------------------------------------------
+   Reducerad rörelse
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   Selection
+   --------------------------------------------------------- */
+::selection {
+  background: var(--color-bjork);
+  color: var(--color-var-vit);
+}
+
+} /* end @layer base */

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Umeå Energi appslideshow</title>
+    <link rel="icon" href="shared-ui/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="shared-ui/tokens.css">
+    <link rel="stylesheet" href="shared-ui/base.css">
+    <link rel="stylesheet" href="shared-ui/components.css">
+    <link rel="stylesheet" href="shared-ui/utilities.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-showcase" aria-labelledby="slide-title">
+      <section class="showcase-grid" aria-roledescription="slideshow" aria-label="Umeå Energi-appen">
+        <div class="device-column">
+          <fieldset class="theme-switch" aria-label="Välj visningsläge">
+            <legend class="sr-only">Visningsläge</legend>
+            <label class="theme-option" data-theme-option="dark">
+              <input type="radio" name="theme" value="dark">
+              <span>Mörkt läge</span>
+            </label>
+            <label class="theme-option" data-theme-option="light">
+              <input type="radio" name="theme" value="light">
+              <span>Ljust läge</span>
+            </label>
+          </fieldset>
+
+          <div class="phone-shell" id="phone-shell">
+            <div class="screen-viewport" aria-live="polite">
+              <div class="screen-track" id="screen-track"></div>
+            </div>
+            <img class="phone-frame" src="assets/phone.png" alt="" aria-hidden="true">
+          </div>
+
+          <div class="slide-nav" aria-label="Navigera mellan appskärmar">
+            <button class="nav-button" type="button" data-action="prev" aria-label="Föregående skärm">
+              <span aria-hidden="true">←</span>
+              <span>Bakåt</span>
+            </button>
+            <span class="slide-count" id="slide-count" aria-live="polite">1/6</span>
+            <button class="nav-button" type="button" data-action="next" aria-label="Nästa skärm">
+              <span>Framåt</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <article class="slide-copy">
+          <h1 id="slide-title">Få snabb överblick</h1>
+          <p id="slide-text">Se användning, fakturor och viktiga genvägar direkt på startsidan.</p>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,303 @@
+html,
+body {
+  width: 100%;
+  min-width: 320px;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  color: var(--ui-fg);
+}
+
+button,
+label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-showcase {
+  --showcase-height: 850px;
+  --phone-w: clamp(238px, 31vw, 336px);
+  --phone-top: 2.65%;
+  --phone-right: 6.4%;
+  --phone-bottom: 2.65%;
+  --phone-left: 6.5%;
+
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: min(100vh, var(--showcase-height));
+  min-height: 0;
+  padding: clamp(14px, 3vw, 34px);
+  background: transparent;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, var(--phone-w)) minmax(260px, 450px);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 7vw, 92px);
+  width: min(100%, 1060px);
+  height: 100%;
+}
+
+.device-column {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: min(100%, 260px);
+  padding: 0;
+  border: 0;
+}
+
+.theme-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 0 0 3px;
+  border-bottom: 2px solid transparent;
+  color: var(--ui-fg);
+  background: transparent;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.62;
+  transition: border-color 160ms ease, opacity 160ms ease;
+  user-select: none;
+}
+
+.theme-option input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.theme-option:has(input:focus-visible) {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--focus-ring);
+}
+
+.theme-option.is-active {
+  border-bottom-color: currentColor;
+  opacity: 1;
+}
+
+.phone-shell {
+  position: relative;
+  width: var(--phone-w);
+  aspect-ratio: 895 / 1783;
+  touch-action: pan-y;
+}
+
+.screen-viewport {
+  position: absolute;
+  inset: var(--phone-top) var(--phone-right) var(--phone-bottom) var(--phone-left);
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 10.8% / 5.2%;
+  background: #f5f5f7;
+}
+
+[data-app-theme="dark"] .screen-viewport {
+  background: #012d2f;
+}
+
+.screen-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateX(calc(var(--slide-index, 0) * -100%));
+  transition: transform 420ms cubic-bezier(0.45, 0, 0.55, 1);
+  will-change: transform;
+}
+
+.screen-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  background: inherit;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen-slide::-webkit-scrollbar {
+  display: none;
+}
+
+.screen-slide img {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.phone-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slide-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 308px);
+}
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: var(--radius-full);
+  color: var(--color-var-svart);
+  background: var(--color-sol);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  box-shadow: 0 7px 18px rgba(1, 45, 47, 0.08);
+  transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.nav-button:hover {
+  background: var(--color-varme);
+  box-shadow: 0 9px 22px rgba(1, 45, 47, 0.12);
+  transform: translateY(-1px);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+}
+
+.slide-count {
+  min-width: 42px;
+  color: var(--ui-fg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-align: center;
+}
+
+.slide-copy {
+  display: grid;
+  gap: 10px;
+  max-width: 430px;
+  align-content: center;
+}
+
+.slide-copy h1 {
+  color: var(--ui-fg);
+  font-size: clamp(2rem, 4.2vw, 3.65rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.slide-copy p {
+  max-width: 29rem;
+  color: var(--ui-fg);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.32;
+}
+
+@media (max-width: 760px) {
+  .app-showcase {
+    --phone-w: clamp(238px, 72vw, 304px);
+    align-items: start;
+    padding: 12px 16px 16px;
+  }
+
+  .showcase-grid {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    justify-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .device-column {
+    gap: 12px;
+    align-content: start;
+    width: 100%;
+  }
+
+  .theme-switch {
+    width: min(100%, 220px);
+    gap: 16px;
+  }
+
+  .theme-option {
+    min-height: 22px;
+    padding: 0 0 3px;
+    font-size: 0.84rem;
+  }
+
+  .slide-nav {
+    width: min(100%, 288px);
+  }
+
+  .nav-button {
+    min-height: 38px;
+    padding: 9px 14px;
+  }
+
+  .slide-copy {
+    width: min(100%, 390px);
+    gap: 6px;
+    text-align: left;
+  }
+
+  .slide-copy h1 {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+    line-height: 1.05;
+  }
+
+  .slide-copy p {
+    font-size: 1rem;
+    line-height: 1.28;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-showcase {
+    --phone-w: 232px;
+    padding-inline: 12px;
+  }
+
+  .theme-option {
+    font-size: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-track,
+  .nav-button,
+  .theme-option {
+    transition: none;
+  }
+}

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shared-ui – Styleguide - Umeå Energi</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="utilities.css">
+  <style>
+    /* Styleguide-specifik layout (stannar lokalt) */
+    .sg { max-width: 1100px; margin: 0 auto; padding: var(--space-6); }
+    .sg-header { padding: var(--space-8) 0 var(--space-6); border-bottom: 2px solid var(--ui-border); margin-bottom: var(--space-8); }
+    .sg-header h1 { font-size: var(--text-3xl); margin-bottom: var(--space-2); }
+    .sg-header p { color: var(--ui-muted); font-size: var(--text-md); }
+    .sg-section { margin-bottom: var(--space-16); }
+    .sg-section > h2 { font-size: var(--text-2xl); margin-bottom: var(--space-6); padding-bottom: var(--space-2); border-bottom: 1px solid var(--ui-border); }
+    .sg-section > h3 { font-size: var(--text-lg); margin-top: var(--space-6); margin-bottom: var(--space-3); color: var(--ui-muted); }
+    .sg-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4); }
+    .sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4); }
+    .sg-swatch { height: 60px; border-radius: var(--radius-lg); border: 1px solid var(--ui-border); display: flex; align-items: flex-end; padding: var(--space-2); font-size: var(--text-xs); }
+    .sg-swatch span { background: rgba(0,0,0,.55); color: #fff; padding: 1px 6px; border-radius: var(--radius-sm); line-height: 1.5; }
+    .sg-example { padding: var(--space-4); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); background: var(--ui-surface); margin-bottom: var(--space-4); }
+    .sg-label { font-size: var(--text-xs); color: var(--ui-muted); font-weight: var(--font-medium); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2); }
+    .sg-spacer-demo { background: color-mix(in srgb, var(--ui-primary) 15%, transparent); border-radius: var(--radius-sm); height: var(--space-4); }
+    .sg-type-sample { margin-bottom: var(--space-2); }
+    .sg-nav { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: var(--space-3) 0; }
+    .sg-nav a { font-size: var(--text-sm); color: var(--ui-primary); text-decoration: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); border: 1px solid var(--ui-border); }
+    .sg-nav a:hover { background: var(--ui-bg); }
+    /* Toolbar: visa vid uppskroll, göm vid nerskroll */
+    .toolbar { position: fixed; top: 0; left: 0; right: 0; transition: transform 0.3s ease; }
+    .toolbar.is-hidden { transform: translateY(-100%); }
+    body { padding-top: 56px; } /* kompensera för fixed toolbar */
+    /* Modal preview: visa modalen inline istället för fixed */
+    .sg-modal-preview .modal-overlay { position: relative; inset: auto; padding: var(--space-6); border-radius: var(--radius-lg); }
+    .sg-inline-toast .toast-container { position: relative; bottom: auto; right: auto; }
+  </style>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar__brand">
+      <img src="logos/ue-logo-icon.svg" alt="" style="height:24px">
+      shared-ui Styleguide
+    </div>
+    <span class="spacer"></span>
+    <button class="btn btn--ghost btn--sm" id="theme-toggle" aria-label="Växla tema">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </header>
+
+  <main class="sg">
+    <div class="sg-header">
+      <h1>shared-ui</h1>
+      <p>Gemensam CSS-bas för Umeå Energis interna verktyg. Alla komponenter, tokens och utilities visas nedan.</p>
+    </div>
+
+    <nav class="sg-nav" aria-label="Snabbnavigering">
+      <a href="#brand-assets">Varumärke</a>
+      <a href="#tokens">Tokens</a>
+      <a href="#typography">Typografi</a>
+      <a href="#buttons">Knappar</a>
+      <a href="#forms">Formulär</a>
+      <a href="#panels">Panel & Card</a>
+      <a href="#toolbar-section">Toolbar</a>
+      <a href="#modal-section">Modal</a>
+      <a href="#switch-section">Switch</a>
+      <a href="#alerts">Alert</a>
+      <a href="#badges">Badge</a>
+      <a href="#chips">Chip</a>
+      <a href="#tabs-section">Tabs</a>
+      <a href="#accordion-section">Accordion</a>
+      <a href="#toast-section">Toast</a>
+      <a href="#dropdown-section">Dropdown</a>
+      <a href="#table-section">Table</a>
+      <a href="#progress-section">Progress</a>
+      <a href="#avatar-section">Avatar</a>
+      <a href="#spinner-section">Spinner</a>
+      <a href="#skeleton-section">Skeleton</a>
+      <a href="#empty-state-section">Empty state</a>
+      <a href="#icons-section">Ikoner</a>
+      <a href="#utilities-section">Utilities</a>
+    </nav>
+
+    <!-- ====================================================
+         VARUMÄRKE & ASSETS
+         ==================================================== -->
+    <section class="sg-section" id="brand-assets">
+      <h2>Varumärke & Assets</h2>
+      <p class="text-muted mb-4">Alla varumärkesresurser ingår i shared-ui. Logotyper, typsnitt och favicons levereras färdiga.</p>
+
+      <h3>Logotyp</h3>
+      <div class="sg-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+        <div class="sg-example" style="background:var(--ui-surface)">
+          <div class="sg-label">ue-logo.svg – ljus bakgrund</div>
+          <img src="logos/ue-logo.svg" alt="Umeå Energi logotyp" style="height:40px;margin-top:var(--space-2)">
+        </div>
+        <div class="sg-example" style="background:var(--color-var-svart);padding:var(--space-4);border-radius:var(--radius-lg)">
+          <div class="sg-label" style="color:rgba(255,255,255,.7)">ue-logo-white.svg – mörk bakgrund</div>
+          <img src="logos/ue-logo-white.svg" alt="Umeå Energi logotyp (vit)" style="height:40px;margin-top:var(--space-2)">
+        </div>
+        <div class="sg-example" style="background:var(--ui-surface)">
+          <div class="sg-label">ue-logo-icon.svg – symbol</div>
+          <img src="logos/ue-logo-icon.svg" alt="Umeå Energi symbol" style="height:48px;margin-top:var(--space-2)">
+        </div>
+      </div>
+
+      <h3>Slogan</h3>
+      <div class="sg-example" style="max-width:500px">
+        <img src="logos/ue-slogan.svg" alt="Umeå Energi slogan" style="width:100%;max-height:120px">
+      </div>
+
+      <h3>Typsnitt – Borna</h3>
+      <div class="sg-example">
+        <p class="mb-2"><strong>Borna</strong> är Umeå Energis varumärkesfont. Ingår i <code>fonts/</code> som woff2 (6 filer, ~170 KB totalt).</p>
+        <div style="display:grid;gap:var(--space-2)">
+          <span style="font-weight:400">Regular (400) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+          <span style="font-weight:400;font-style:italic">Regular Italic (400) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+          <span style="font-weight:500">Medium (500) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+          <span style="font-weight:500;font-style:italic">Medium Italic (500) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+          <span style="font-weight:600">Semibold (600) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+          <span style="font-weight:600;font-style:italic">Semibold Italic (600) – ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ abcdefghijklmnopqrstuvwxyzåäö 0123456789</span>
+        </div>
+      </div>
+
+      <h3>Favicon</h3>
+      <div class="sg-example">
+        <div class="sg-row">
+          <img src="favicon.ico" alt="Favicon ICO" style="width:32px;height:32px;image-rendering:pixelated">
+          <span class="text-sm text-muted">favicon.ico (32×32, ICO)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TOKENS
+         ==================================================== -->
+    <section class="sg-section" id="tokens">
+      <h2>Design Tokens</h2>
+
+      <h3>Varumärkesfärger</h3>
+      <div class="sg-grid">
+        <div class="sg-swatch" style="background:var(--color-var-vit)"><span>--color-var-vit</span></div>
+        <div class="sg-swatch" style="background:var(--color-var-svart)"><span>--color-var-svart</span></div>
+        <div class="sg-swatch" style="background:var(--color-typografi)"><span>--color-typografi</span></div>
+        <div class="sg-swatch" style="background:var(--color-gran)"><span>--color-gran</span></div>
+        <div class="sg-swatch" style="background:var(--color-bjork)"><span>--color-bjork</span></div>
+        <div class="sg-swatch" style="background:var(--color-tall)"><span>--color-tall</span></div>
+        <div class="sg-swatch" style="background:var(--color-dimma)"><span>--color-dimma</span></div>
+        <div class="sg-swatch" style="background:var(--color-sol)"><span>--color-sol</span></div>
+        <div class="sg-swatch" style="background:var(--color-varme)"><span>--color-varme</span></div>
+      </div>
+
+      <h3>Semantiska UI-färger</h3>
+      <div class="sg-grid">
+        <div class="sg-swatch" style="background:var(--ui-bg)"><span>--ui-bg</span></div>
+        <div class="sg-swatch" style="background:var(--ui-surface)"><span>--ui-surface</span></div>
+        <div class="sg-swatch" style="background:var(--ui-fg)"><span>--ui-fg</span></div>
+        <div class="sg-swatch" style="background:var(--ui-border)"><span>--ui-border</span></div>
+        <div class="sg-swatch" style="background:var(--ui-muted)"><span>--ui-muted</span></div>
+        <div class="sg-swatch" style="background:var(--ui-primary)"><span>--ui-primary</span></div>
+        <div class="sg-swatch" style="background:var(--ui-danger)"><span>--ui-danger</span></div>
+        <div class="sg-swatch" style="background:var(--ui-success)"><span>--ui-success</span></div>
+        <div class="sg-swatch" style="background:var(--ui-warning)"><span>--ui-warning</span></div>
+        <div class="sg-swatch" style="background:var(--ui-info)"><span>--ui-info</span></div>
+      </div>
+
+      <h3>Spacing</h3>
+      <div style="display:grid; gap:var(--space-2); max-width:400px;">
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-1</code><div class="sg-spacer-demo" style="width:var(--space-1)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-2</code><div class="sg-spacer-demo" style="width:var(--space-2)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-3</code><div class="sg-spacer-demo" style="width:var(--space-3)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-4</code><div class="sg-spacer-demo" style="width:var(--space-4)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-6</code><div class="sg-spacer-demo" style="width:var(--space-6)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-8</code><div class="sg-spacer-demo" style="width:var(--space-8)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-10</code><div class="sg-spacer-demo" style="width:var(--space-10)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-12</code><div class="sg-spacer-demo" style="width:var(--space-12)"></div></div>
+        <div class="flex items-center gap-3"><code class="text-xs" style="width:80px">--space-16</code><div class="sg-spacer-demo" style="width:var(--space-16)"></div></div>
+      </div>
+
+      <h3>Border Radius</h3>
+      <div class="sg-row">
+        <div style="width:48px;height:48px;background:var(--ui-primary);border-radius:var(--radius-sm)" title="--radius-sm"></div>
+        <div style="width:48px;height:48px;background:var(--ui-primary);border-radius:var(--radius-md)" title="--radius-md"></div>
+        <div style="width:48px;height:48px;background:var(--ui-primary);border-radius:var(--radius-lg)" title="--radius-lg"></div>
+        <div style="width:48px;height:48px;background:var(--ui-primary);border-radius:var(--radius-xl)" title="--radius-xl"></div>
+        <div style="width:48px;height:48px;background:var(--ui-primary);border-radius:var(--radius-full)" title="--radius-full"></div>
+      </div>
+      <div class="sg-row text-xs text-muted">
+        <span style="width:48px;text-align:center">sm</span>
+        <span style="width:48px;text-align:center">md</span>
+        <span style="width:48px;text-align:center">lg</span>
+        <span style="width:48px;text-align:center">xl</span>
+        <span style="width:48px;text-align:center">full</span>
+      </div>
+
+      <h3>Shadows</h3>
+      <div class="sg-row">
+        <div style="width:100px;height:60px;background:var(--ui-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)" class="flex items-center justify-center text-xs text-muted">sm</div>
+        <div style="width:100px;height:60px;background:var(--ui-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-md)" class="flex items-center justify-center text-xs text-muted">md</div>
+        <div style="width:100px;height:60px;background:var(--ui-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)" class="flex items-center justify-center text-xs text-muted">lg</div>
+        <div style="width:100px;height:60px;background:var(--ui-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-overlay)" class="flex items-center justify-center text-xs text-muted">overlay</div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TYPOGRAFI
+         ==================================================== -->
+    <section class="sg-section" id="typography">
+      <h2>Typografi</h2>
+      <div class="sg-example">
+        <div class="sg-type-sample"><h1>H1 – Rubrik (--text-3xl / 36px)</h1></div>
+        <div class="sg-type-sample"><h2>H2 – Underrubrik (--text-2xl / 30px)</h2></div>
+        <div class="sg-type-sample"><h3>H3 – Sektion (--text-xl / 24px)</h3></div>
+        <div class="sg-type-sample"><h4>H4 – Mindre rubrik (--text-lg / 20px)</h4></div>
+        <div class="sg-type-sample"><h5>H5 – Label-rubrik (--text-md / 18px)</h5></div>
+        <div class="sg-type-sample"><h6>H6 – Minsta rubrik (--text-base / 16px)</h6></div>
+        <hr>
+        <p>Brödtext i standardstorlek (--text-base / 16px). Borna är Umeå Energis varumärkesfont och används genomgående. <a href="#">Länk i brödtext</a> med underline.</p>
+        <p><small>Liten text (--text-sm / 14px) för sekundär information.</small></p>
+        <p><strong>Fetstil</strong> och <em>kursiv</em> och <code>kodtext</code>.</p>
+      </div>
+
+      <h3>Font-storlekar</h3>
+      <div class="sg-example" style="display:grid;gap:var(--space-2)">
+        <span style="font-size:var(--text-xs)">text-xs (12px)</span>
+        <span style="font-size:var(--text-sm)">text-sm (14px)</span>
+        <span style="font-size:var(--text-base)">text-base (16px)</span>
+        <span style="font-size:var(--text-md)">text-md (18px)</span>
+        <span style="font-size:var(--text-lg)">text-lg (20px)</span>
+        <span style="font-size:var(--text-xl)">text-xl (24px)</span>
+        <span style="font-size:var(--text-2xl)">text-2xl (30px)</span>
+        <span style="font-size:var(--text-3xl)">text-3xl (36px)</span>
+      </div>
+
+      <h3>Font-vikter</h3>
+      <div class="sg-example" style="display:grid;gap:var(--space-2)">
+        <span style="font-weight:var(--font-normal)">Normal (400) – Borna Regular</span>
+        <span style="font-weight:var(--font-medium)">Medium (500) – Borna Medium</span>
+        <span style="font-weight:var(--font-semibold)">Semibold (600) – Borna Semibold</span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         KNAPPAR
+         ==================================================== -->
+    <section class="sg-section" id="buttons">
+      <h2>Knappar</h2>
+      <div class="sg-label">Varianter</div>
+      <div class="sg-row">
+        <button class="btn">Default</button>
+        <button class="btn btn--primary">Primary</button>
+        <button class="btn btn--secondary">Secondary</button>
+        <button class="btn btn--ghost">Ghost</button>
+        <button class="btn btn--danger">Danger</button>
+      </div>
+
+      <div class="sg-label">Storlekar</div>
+      <div class="sg-row">
+        <button class="btn btn--primary btn--sm">Small</button>
+        <button class="btn btn--primary">Normal</button>
+      </div>
+
+      <div class="sg-label">Disabled</div>
+      <div class="sg-row">
+        <button class="btn" disabled>Primary disabled</button>
+        <button class="btn btn--secondary" disabled>Secondary disabled</button>
+        <button class="btn btn--ghost" disabled>Ghost disabled</button>
+      </div>
+
+      <div class="sg-label">Med ikon</div>
+      <div class="sg-row">
+        <button class="btn btn--primary">
+          <span class="icon icon--sm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          Lägg till
+        </button>
+        <button class="btn btn--ghost btn--sm">
+          <span class="icon icon--sm"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg></span>
+          Ny
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         FORMULÄR
+         ==================================================== -->
+    <section class="sg-section" id="forms">
+      <h2>Formulär</h2>
+      <div class="sg-example" style="max-width:480px;">
+        <div class="stack stack-4">
+          <div class="field">
+            <label class="label" for="sg-name">Namn</label>
+            <input class="input" id="sg-name" type="text" placeholder="Skriv ditt namn…">
+            <span class="help-text">Ange ditt fullständiga namn</span>
+          </div>
+
+          <div class="field">
+            <label class="label" for="sg-email">E-post</label>
+            <input class="input is-error" id="sg-email" type="email" value="ogiltig-epost">
+            <span class="help-text is-error">Ange en giltig e-postadress</span>
+          </div>
+
+          <div class="field">
+            <label class="label" for="sg-select">Välj bolag</label>
+            <select class="select" id="sg-select">
+              <option value="">Välj…</option>
+              <option>Umeå Energi AB</option>
+              <option>Umeå Energi Elnät AB</option>
+              <option>Umeå Energi UmeNet AB</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="sg-msg">Meddelande</label>
+            <textarea class="textarea" id="sg-msg" placeholder="Skriv ditt meddelande…"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="label" for="sg-disabled">Inaktivt fält</label>
+            <input class="input" id="sg-disabled" type="text" disabled value="Kan inte redigeras">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL & CARD
+         ==================================================== -->
+    <section class="sg-section" id="panels">
+      <h2>Panel & Card</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="panel">
+          <h3>Panel</h3>
+          <p class="text-muted mt-2">Större yta med rundade hörn (xl) och medium-skugga. Typiskt för sidopaneler och innehållsytor.</p>
+        </div>
+        <div class="card">
+          <h3>Card</h3>
+          <p class="text-muted mt-2">Mindre kort med subtil skugga. Bra för enskilda objekt i en lista.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TOOLBAR
+         ==================================================== -->
+    <section class="sg-section" id="toolbar-section">
+      <h2>Toolbar</h2>
+      <div class="sg-example p-0 overflow-hidden" style="border-radius:var(--radius-lg)">
+        <div class="toolbar" style="position:static">
+          <div class="toolbar__brand">
+            <span class="toolbar__dot"></span>
+            Verktygsnamn
+          </div>
+          <span class="spacer"></span>
+          <span class="badge badge--success">v2.1</span>
+          <button class="btn btn--ghost btn--sm">Exportera</button>
+          <button class="btn btn--primary btn--sm">Spara</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         MODAL
+         ==================================================== -->
+    <section class="sg-section" id="modal-section">
+      <h2>Modal</h2>
+      <div class="sg-label">Inline-preview (inte fixed)</div>
+      <div class="sg-modal-preview">
+        <div class="modal-overlay">
+          <div class="modal" style="width:100%;max-width:500px">
+            <div class="modal__header">
+              <h2 class="modal__title">Bekräfta radering</h2>
+              <button class="modal__close" aria-label="Stäng">&times;</button>
+            </div>
+            <div class="modal__content">
+              <p>Är du säker på att du vill ta bort detta objekt? Åtgärden kan inte ångras.</p>
+              <div class="flex gap-3 justify-end mt-4">
+                <button class="btn btn--ghost">Avbryt</button>
+                <button class="btn btn--danger">Ta bort</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SWITCH
+         ==================================================== -->
+    <section class="sg-section" id="switch-section">
+      <h2>Switch</h2>
+      <div class="sg-row">
+        <label class="switch">
+          <input type="checkbox" aria-label="Exempelväxel av">
+          <span class="switch__track"></span>
+        </label>
+        <span class="text-sm">Av</span>
+
+        <label class="switch" style="margin-left:var(--space-6)">
+          <input type="checkbox" checked aria-label="Exempelväxel på">
+          <span class="switch__track"></span>
+        </label>
+        <span class="text-sm">På</span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         ALERTS
+         ==================================================== -->
+    <section class="sg-section" id="alerts">
+      <h2>Alert</h2>
+      <div class="stack stack-3">
+        <div class="alert alert--info">
+          <span class="icon icon--md"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+          <span>Information – detta är en informationsruta.</span>
+        </div>
+        <div class="alert alert--success">
+          <span class="icon icon--md"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <span>Klart! Ändringarna har sparats.</span>
+        </div>
+        <div class="alert alert--warning">
+          <span class="icon icon--md"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg></span>
+          <span>Varning – kontrollera inmatningen innan du fortsätter.</span>
+        </div>
+        <div class="alert alert--error">
+          <span class="icon icon--md"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></span>
+          <span>Fel – något gick snett. Försök igen.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         BADGES
+         ==================================================== -->
+    <section class="sg-section" id="badges">
+      <h2>Badge</h2>
+      <div class="sg-row">
+        <span class="badge">Default</span>
+        <span class="badge badge--primary">Primary</span>
+        <span class="badge badge--success">Success</span>
+        <span class="badge badge--danger">Danger</span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         CHIPS
+         ==================================================== -->
+    <section class="sg-section" id="chips">
+      <h2>Chip</h2>
+      <div class="sg-row">
+        <span class="chip">Etikett</span>
+        <span class="chip chip--primary">Aktiv</span>
+        <span class="chip">
+          Med stäng
+          <button class="chip__remove" aria-label="Ta bort">&times;</button>
+        </span>
+        <span class="chip chip--primary">
+          Filter
+          <button class="chip__remove" aria-label="Ta bort">&times;</button>
+        </span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TABS
+         ==================================================== -->
+    <section class="sg-section" id="tabs-section">
+      <h2>Tabs</h2>
+
+      <h3>Underline tabs</h3>
+      <div class="sg-example">
+        <div class="tabs" role="tablist" id="tabs-demo">
+          <button class="tabs__tab is-active" role="tab" aria-selected="true" data-tab="tab1">Översikt</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="tab2">Inställningar</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="tab3">Historik</button>
+        </div>
+        <div class="tab-panel" id="tab1" role="tabpanel">
+          <p>Innehåll för Översikt-fliken.</p>
+        </div>
+        <div class="tab-panel" id="tab2" role="tabpanel" hidden>
+          <p>Innehåll för Inställningar-fliken.</p>
+        </div>
+        <div class="tab-panel" id="tab3" role="tabpanel" hidden>
+          <p>Innehåll för Historik-fliken.</p>
+        </div>
+      </div>
+
+      <h3>Segmented control</h3>
+      <div class="sg-example">
+        <div class="tabs tabs--segmented" role="tablist" id="seg-demo" style="display:inline-flex">
+          <button class="tabs__tab is-active" role="tab" aria-selected="true" data-tab="seg1">Dag</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="seg2">Vecka</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="seg3">Månad</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         ACCORDION
+         ==================================================== -->
+    <section class="sg-section" id="accordion-section">
+      <h2>Accordion</h2>
+      <div class="sg-example" style="max-width:560px">
+        <div class="accordion" id="acc-demo">
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="true" aria-controls="acc-panel-1">
+              Vad är shared-ui?
+              <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion__content is-open" id="acc-panel-1" role="region">
+              <div class="accordion__body">
+                En gemensam CSS-bas för Umeå Energis interna verktyg. Ger enhetliga färger, typografi, komponenter och layout-hjälpare.
+              </div>
+            </div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false" aria-controls="acc-panel-2">
+              Behöver jag React eller Vue?
+              <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion__content" id="acc-panel-2" role="region">
+              <div class="accordion__body">
+                Nej. shared-ui är ren CSS och fungerar med vilken teknikstack som helst, inklusive vanilla HTML/JS.
+              </div>
+            </div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false" aria-controls="acc-panel-3">
+              Hur hanteras dark mode?
+              <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion__content" id="acc-panel-3" role="region">
+              <div class="accordion__body">
+                Sätt <code>data-theme="dark"</code> på html-elementet, eller låt systempreferensen styra automatiskt.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TOAST
+         ==================================================== -->
+    <section class="sg-section" id="toast-section">
+      <h2>Toast / Snackbar</h2>
+      <div class="sg-label">Varianter (visas inline)</div>
+      <div class="sg-inline-toast">
+        <div class="toast-container" style="gap:var(--space-3)">
+          <div class="toast toast--info" role="status">
+            <span class="toast__message">Ny version tillgänglig.</span>
+            <button class="toast__close" aria-label="Stäng">&times;</button>
+          </div>
+          <div class="toast toast--success" role="status">
+            <span class="toast__message">Sparat! Ändringarna har publicerats.</span>
+            <button class="toast__close" aria-label="Stäng">&times;</button>
+          </div>
+          <div class="toast toast--warning" role="status">
+            <span class="toast__message">Sessionen går ut om 5 minuter.</span>
+            <button class="toast__close" aria-label="Stäng">&times;</button>
+          </div>
+          <div class="toast toast--error" role="alert">
+            <span class="toast__message">Kunde inte spara. Kontrollera nätverket.</span>
+            <button class="toast__close" aria-label="Stäng">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="btn btn--secondary btn--sm" id="toast-demo-btn">Visa live-toast</button>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         DROPDOWN
+         ==================================================== -->
+    <section class="sg-section" id="dropdown-section">
+      <h2>Dropdown</h2>
+      <div class="sg-example">
+        <div class="dropdown" id="dropdown-demo">
+          <button class="btn btn--ghost" id="dropdown-trigger">
+            Åtgärder ▾
+          </button>
+          <div class="dropdown__menu" id="dropdown-menu">
+            <button class="dropdown__item">Redigera</button>
+            <button class="dropdown__item">Duplicera</button>
+            <button class="dropdown__item">Exportera</button>
+            <hr class="dropdown__divider">
+            <button class="dropdown__item dropdown__item--danger">Ta bort</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TABLE
+         ==================================================== -->
+    <section class="sg-section" id="table-section">
+      <h2>Table</h2>
+      <div class="sg-example">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Bolag</th>
+              <th>Org.nr</th>
+              <th>Telefon</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Umeå Energi AB</td>
+              <td>556097-8602</td>
+              <td>090-16 00 20</td>
+              <td><span class="badge badge--success">Aktiv</span></td>
+            </tr>
+            <tr>
+              <td>Umeå Energi Elnät AB</td>
+              <td>556086-8225</td>
+              <td>090-16 00 21</td>
+              <td><span class="badge badge--success">Aktiv</span></td>
+            </tr>
+            <tr>
+              <td>Umeå Energi UmeNet AB</td>
+              <td>556619-3057</td>
+              <td>090-16 00 21</td>
+              <td><span class="badge">Pausad</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PROGRESS
+         ==================================================== -->
+    <section class="sg-section" id="progress-section">
+      <h2>Progress</h2>
+      <div class="sg-example stack stack-4" style="max-width:400px">
+        <div>
+          <div class="sg-label">Small (4px)</div>
+          <div class="progress progress--sm" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><div class="progress__bar" style="width:30%"></div></div>
+        </div>
+        <div>
+          <div class="sg-label">Default (8px)</div>
+          <div class="progress" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"><div class="progress__bar" style="width:65%"></div></div>
+        </div>
+        <div>
+          <div class="sg-label">Large (12px)</div>
+          <div class="progress progress--lg" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div class="progress__bar" style="width:85%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         AVATAR
+         ==================================================== -->
+    <section class="sg-section" id="avatar-section">
+      <h2>Avatar</h2>
+      <div class="sg-row">
+        <span class="avatar avatar--sm">A</span>
+        <span class="avatar">ET</span>
+        <span class="avatar avatar--lg">UE</span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SPINNER
+         ==================================================== -->
+    <section class="sg-section" id="spinner-section">
+      <h2>Spinner</h2>
+      <div class="sg-row">
+        <span class="spinner spinner--sm" role="status"><span class="sr-only">Laddar…</span></span>
+        <span class="spinner" role="status"><span class="sr-only">Laddar…</span></span>
+        <span class="spinner spinner--lg" role="status"><span class="sr-only">Laddar…</span></span>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SKELETON
+         ==================================================== -->
+    <section class="sg-section" id="skeleton-section">
+      <h2>Skeleton</h2>
+      <div class="sg-example" style="max-width:400px">
+        <div class="flex gap-3 items-center mb-4">
+          <div class="skeleton skeleton--circle"></div>
+          <div class="flex-1">
+            <div class="skeleton skeleton--text" style="width:60%"></div>
+            <div class="skeleton skeleton--text" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="skeleton skeleton--heading"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton skeleton--text" style="width:70%"></div>
+        <div class="skeleton skeleton--text" style="width:50%"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         EMPTY STATE
+         ==================================================== -->
+    <section class="sg-section" id="empty-state-section">
+      <h2>Empty State</h2>
+      <div class="sg-example">
+        <div class="empty-state">
+          <div class="empty-state__icon">📭</div>
+          <div class="empty-state__text">Inga resultat hittades</div>
+          <button class="btn btn--secondary btn--sm">Rensa filter</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         IKONER
+         ==================================================== -->
+    <section class="sg-section" id="icons-section">
+      <h2>Ikoner</h2>
+      <p class="text-muted mb-4">shared-ui har inga inbyggda ikoner men ger hjälpklasser (<code>.icon</code>) för att storlekssätta inline-SVG konsekvent.</p>
+      <div class="sg-example">
+        <div class="sg-row">
+          <span class="icon icon--sm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="text-xs text-muted">icon--sm (16px)</span>
+
+          <span class="icon icon--md" style="margin-left:var(--space-4)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="text-xs text-muted">icon--md (20px)</span>
+
+          <span class="icon icon--lg" style="margin-left:var(--space-4)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="text-xs text-muted">icon--lg (24px)</span>
+
+          <span class="icon icon--xl" style="margin-left:var(--space-4)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="text-xs text-muted">icon--xl (32px)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         DIVIDER
+         ==================================================== -->
+    <section class="sg-section" id="divider-section">
+      <h2>Divider</h2>
+      <div class="sg-example">
+        <p>Innehåll ovanför</p>
+        <hr class="divider">
+        <p>Standard divider</p>
+        <hr class="divider divider--subtle">
+        <p>Subtle divider</p>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         UTILITIES
+         ==================================================== -->
+    <section class="sg-section" id="utilities-section">
+      <h2>Utilities</h2>
+
+      <h3>Flex</h3>
+      <div class="sg-example">
+        <div class="flex gap-3 items-center" style="border:1px dashed var(--ui-border);padding:var(--space-3);border-radius:var(--radius-md)">
+          <div class="p-2" style="background:var(--ui-primary);color:#fff;border-radius:var(--radius-sm)">.flex</div>
+          <div class="p-2" style="background:var(--ui-primary);color:#fff;border-radius:var(--radius-sm)">.gap-3</div>
+          <div class="p-2" style="background:var(--ui-primary);color:#fff;border-radius:var(--radius-sm)">.items-center</div>
+          <span class="spacer"></span>
+          <span class="text-xs text-muted">.spacer →</span>
+          <div class="p-2" style="background:var(--ui-danger);color:#fff;border-radius:var(--radius-sm)">Höger</div>
+        </div>
+      </div>
+
+      <h3>Stack</h3>
+      <div class="sg-example" style="max-width:300px">
+        <div class="stack stack-3">
+          <div class="p-3" style="background:var(--ui-bg);border-radius:var(--radius-md)">Stack item 1</div>
+          <div class="p-3" style="background:var(--ui-bg);border-radius:var(--radius-md)">Stack item 2</div>
+          <div class="p-3" style="background:var(--ui-bg);border-radius:var(--radius-md)">Stack item 3</div>
+        </div>
+      </div>
+
+      <h3>Grid</h3>
+      <div class="sg-example">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="p-3 text-center" style="background:var(--ui-bg);border-radius:var(--radius-md)">1/3</div>
+          <div class="p-3 text-center" style="background:var(--ui-bg);border-radius:var(--radius-md)">2/3</div>
+          <div class="p-3 text-center" style="background:var(--ui-bg);border-radius:var(--radius-md)">3/3</div>
+        </div>
+      </div>
+
+      <h3>Text utilities</h3>
+      <div class="sg-example">
+        <p class="text-muted">.text-muted</p>
+        <p class="text-danger">.text-danger</p>
+        <p class="text-success">.text-success</p>
+        <p class="font-medium">.font-medium</p>
+        <p class="font-semibold">.font-semibold</p>
+        <p class="truncate" style="max-width:200px">.truncate – denna text klipps av om den blir för lång</p>
+      </div>
+
+      <h3>Tillgänglighet</h3>
+      <div class="sg-example">
+        <p>Denna text är synlig. <span class="sr-only">Denna text syns bara för skärmläsare (.sr-only)</span></p>
+        <p class="text-xs text-muted">Elementet ovan har en <code>.sr-only</code>-span som bara syns för skärmläsare.</p>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         EDITOR SHELL
+         ==================================================== -->
+    <section class="sg-section" id="editor-shell-section">
+      <h2>Editor Shell</h2>
+      <p class="text-muted mb-4">Flexibel applayout som kollapsar till en kolumn under 1100px. Alla varianter krymps här för demo.</p>
+
+      <h3>1 kolumn (default)</h3>
+      <p class="text-xs text-muted mb-2"><code>.editor-shell</code> – centrerad vy för enklare verktyg, formulär eller dashboards.</p>
+      <div class="sg-example p-0 overflow-hidden">
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--space-3);padding:var(--space-3);max-width:600px;margin:0 auto">
+          <main class="card" style="min-height:80px">
+            <h3 style="font-size:var(--text-sm)">Huvudinnehåll</h3>
+            <p class="text-xs text-muted mt-2">Formulär, dashboard eller annan vy</p>
+          </main>
+        </div>
+      </div>
+
+      <h3>2 kolumner – sidebar vänster</h3>
+      <p class="text-xs text-muted mb-2"><code>.editor-shell.editor-shell--sidebar</code> – navigation eller filter till vänster, innehåll till höger.</p>
+      <div class="sg-example p-0 overflow-hidden">
+        <div style="display:grid;grid-template-columns:180px 1fr;gap:var(--space-3);padding:var(--space-3)">
+          <aside class="panel">
+            <h3 style="font-size:var(--text-sm)">Sidebar</h3>
+            <p class="text-xs text-muted mt-2">Navigation / filter</p>
+          </aside>
+          <main class="card" style="min-height:100px">
+            <h3 style="font-size:var(--text-sm)">Huvudinnehåll</h3>
+            <p class="text-xs text-muted mt-2">Redigeringsvy eller lista</p>
+          </main>
+        </div>
+      </div>
+
+      <h3>2 kolumner – sidebar höger</h3>
+      <p class="text-xs text-muted mb-2"><code>.editor-shell.editor-shell--dual</code> – innehåll till vänster, egenskaper eller detaljer till höger.</p>
+      <div class="sg-example p-0 overflow-hidden">
+        <div style="display:grid;grid-template-columns:1fr 200px;gap:var(--space-3);padding:var(--space-3)">
+          <main class="card" style="min-height:100px">
+            <h3 style="font-size:var(--text-sm)">Huvudinnehåll</h3>
+            <p class="text-xs text-muted mt-2">Editor eller preview</p>
+          </main>
+          <aside class="panel">
+            <h3 style="font-size:var(--text-sm)">Egenskaper</h3>
+            <p class="text-xs text-muted mt-2">Detaljer / inställningar</p>
+          </aside>
+        </div>
+      </div>
+
+      <h3>3 kolumner</h3>
+      <p class="text-xs text-muted mb-2"><code>.editor-shell.editor-shell--three</code> – som blankettgeneratorn: kontroller, editor och egenskaper.</p>
+      <div class="sg-example p-0 overflow-hidden">
+        <div style="display:grid;grid-template-columns:160px 1fr 160px;gap:var(--space-3);padding:var(--space-3)">
+          <aside class="panel">
+            <h3 style="font-size:var(--text-sm)">Vänster</h3>
+            <p class="text-xs text-muted mt-2">Kontroller</p>
+          </aside>
+          <main class="card" style="min-height:120px">
+            <h3 style="font-size:var(--text-sm)">Mittinnehåll</h3>
+            <p class="text-xs text-muted mt-2">Preview / editor</p>
+          </main>
+          <aside class="panel">
+            <h3 style="font-size:var(--text-sm)">Höger</h3>
+            <p class="text-xs text-muted mt-2">Egenskaper</p>
+          </aside>
+        </div>
+      </div>
+
+      <h3>Anpassning</h3>
+      <div class="sg-example">
+        <p class="text-sm">Anpassa sidokolumnens bredd och max-width med custom properties:</p>
+        <pre style="background:var(--ui-bg);padding:var(--space-3);border-radius:var(--radius-md);font-size:var(--text-sm);margin-top:var(--space-2);overflow-x:auto"><code>.editor-shell {
+  --shell-sidebar: 280px;     /* sidokolumnens bredd */
+  --shell-max-width: 1400px;  /* max-bredd på hela shellen */
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Live-toast container -->
+  <div class="toast-container" id="live-toast-container"></div>
+
+  <script>
+    // ---- Theme (inlined from theme.js for file:// compatibility) ----
+    const STORAGE_KEY = 'shared-ui-theme'
+
+    function getTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'auto'
+    }
+
+    function getActiveTheme() {
+      const theme = getTheme()
+      if (theme === 'auto') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      }
+      return theme
+    }
+
+    function setTheme(theme) {
+      if (theme === 'auto') {
+        document.documentElement.removeAttribute('data-theme')
+      } else {
+        document.documentElement.setAttribute('data-theme', theme)
+      }
+      try { localStorage.setItem(STORAGE_KEY, theme) } catch {}
+    }
+
+    function toggleTheme() {
+      setTheme(getActiveTheme() === 'dark' ? 'light' : 'dark')
+    }
+
+    // Init
+    ;(function initTheme() {
+      let saved = null
+      try { saved = localStorage.getItem(STORAGE_KEY) } catch {}
+      if (saved === 'light' || saved === 'dark') {
+        setTheme(saved)
+      } else {
+        setTheme('auto')
+      }
+    })()
+
+    function updateThemeIcon() {
+      document.getElementById('theme-icon').textContent =
+        getActiveTheme() === 'dark' ? '☀️' : '🌙'
+    }
+    updateThemeIcon()
+
+    // Tema-toggle
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      toggleTheme()
+      updateThemeIcon()
+    })
+
+    // ---- Show toolbar on scroll up, hide on scroll down ----
+    ;(function() {
+      var toolbar = document.querySelector('.toolbar')
+      var lastY = window.scrollY
+      var ticking = false
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            var y = window.scrollY
+            if (y > lastY && y > 80) {
+              toolbar.classList.add('is-hidden')
+            } else {
+              toolbar.classList.remove('is-hidden')
+            }
+            lastY = y
+            ticking = false
+          })
+          ticking = true
+        }
+      })
+    })()
+
+    // ---- Tabs demo ----
+    document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+      tablist.addEventListener('click', e => {
+        const tab = e.target.closest('.tabs__tab')
+        if (!tab) return
+        tablist.querySelectorAll('.tabs__tab').forEach(t => {
+          t.classList.remove('is-active')
+          t.setAttribute('aria-selected', 'false')
+        })
+        tab.classList.add('is-active')
+        tab.setAttribute('aria-selected', 'true')
+
+        // Toggle panels if they exist
+        const tabId = tab.dataset.tab
+        if (tabId) {
+          const container = tablist.parentElement
+          container.querySelectorAll('.tab-panel').forEach(p => p.hidden = true)
+          const panel = container.querySelector('#' + tabId)
+          if (panel) panel.hidden = false
+        }
+      })
+    })
+
+    // ---- Accordion demo ----
+    document.querySelectorAll('.accordion__trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const expanded = trigger.getAttribute('aria-expanded') === 'true'
+        trigger.setAttribute('aria-expanded', String(!expanded))
+        const content = trigger.nextElementSibling
+        if (content) {
+          content.classList.toggle('is-open', !expanded)
+        }
+      })
+    })
+
+    // ---- Dropdown demo ----
+    const ddTrigger = document.getElementById('dropdown-trigger')
+    const ddMenu = document.getElementById('dropdown-menu')
+    if (ddTrigger && ddMenu) {
+      ddTrigger.addEventListener('click', e => {
+        e.stopPropagation()
+        ddMenu.classList.toggle('is-open')
+      })
+      document.addEventListener('click', () => ddMenu.classList.remove('is-open'))
+      ddMenu.querySelectorAll('.dropdown__item').forEach(item => {
+        item.addEventListener('click', () => ddMenu.classList.remove('is-open'))
+      })
+    }
+
+    // ---- Live toast demo ----
+    let toastId = 0
+    const toastContainer = document.getElementById('live-toast-container')
+    document.getElementById('toast-demo-btn').addEventListener('click', () => {
+      const types = ['info', 'success', 'warning', 'error']
+      const messages = [
+        'Ny version tillgänglig.',
+        'Sparat!',
+        'Sessionen går ut snart.',
+        'Något gick fel.'
+      ]
+      const idx = toastId++ % types.length
+      const toast = document.createElement('div')
+      toast.className = `toast toast--${types[idx]}`
+      toast.setAttribute('role', types[idx] === 'error' ? 'alert' : 'status')
+      toast.innerHTML = `
+        <span class="toast__message">${messages[idx]}</span>
+        <button class="toast__close" aria-label="Stäng">&times;</button>
+      `
+      toastContainer.appendChild(toast)
+
+      toast.querySelector('.toast__close').addEventListener('click', () => removeToast(toast))
+      setTimeout(() => removeToast(toast), 4000)
+    })
+
+    function removeToast(toast) {
+      if (!toast.parentNode || toast.dataset.leaving) return
+      toast.dataset.leaving = '1'
+      toast.classList.add('is-leaving')
+      var fallback = setTimeout(function() { toast.remove() }, 500)
+      toast.addEventListener('animationend', function() {
+        clearTimeout(fallback)
+        toast.remove()
+      })
+    }
+  </script>
+</body>
+</html>
