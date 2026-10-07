@@ -2,7 +2,7 @@
 
 Fristående vanilla HTML/CSS/JS-slideshow för att visa Umeå Energis app i ett Storyblok iframe-block.
 
-Komponenten är byggd för en fast iframe-höjd på cirka `850px`, transparent bakgrund och responsiv layout baserad på iframens egen bredd.
+Komponenten är byggd för en fast iframe-höjd på cirka `750px`, transparent bakgrund och responsiv layout baserad på iframens egen bredd.
 
 ## Funktioner
 
@@ -71,12 +71,12 @@ http://127.0.0.1:8787/index.html
 <iframe
   src="https://example.com/app-slideshow/index.html"
   title="Umeå Energi-appen"
-  style="width:100%;height:850px;border:0;background:transparent;"
+  style="width:100%;height:750px;border:0;background:transparent;"
   allowtransparency="true"
 ></iframe>
 ```
 
-Viktigt: iframens höjd sätts av sidan som bäddar in komponenten. Komponenten är optimerad för `850px` och fyller inte nödvändigtvis hela höjden på alla bredder.
+Viktigt: iframens höjd sätts av sidan som bäddar in komponenten. Komponenten är optimerad för `750px` och skalar telefonen efter både iframe-bredd och iframe-höjd.
 
 ## Anpassa slides
 
@@ -131,7 +131,7 @@ Maskens position styrs i `styles.css` med:
 
 - Alla assets har webbsäkra filnamn.
 - `index.html`, `styles.css`, `script.js`, `assets/` och `shared-ui/` publiceras tillsammans.
-- Iframen har `width: 100%`, `height: 850px`, `border: 0` och transparent bakgrund.
+- Iframen har `width: 100%`, `height: 750px`, `border: 0` och transparent bakgrund.
 - Testa minst dessa bredder:
   - cirka `320px`
   - cirka `390px`

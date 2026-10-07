@@ -18,7 +18,7 @@ label {
 }
 
 .app-showcase {
-  --showcase-height: 850px;
+  --showcase-height: 750px;
   --phone-w: clamp(238px, 31vw, 336px);
   --phone-top: 2.65%;
   --phone-right: 6.4%;
@@ -101,7 +101,7 @@ label {
 
 .phone-shell {
   position: relative;
-  width: var(--phone-w);
+  width: min(var(--phone-w), calc((100vh - 168px) * 895 / 1783));
   aspect-ratio: 895 / 1783;
   touch-action: pan-y;
 }
@@ -240,6 +240,10 @@ label {
     justify-items: center;
     gap: 16px;
     width: 100%;
+  }
+
+  .phone-shell {
+    width: min(var(--phone-w), calc((100vh - 236px) * 895 / 1783));
   }
 
   .device-column {
