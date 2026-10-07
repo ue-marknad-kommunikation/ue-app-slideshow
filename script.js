@@ -43,8 +43,10 @@ const phoneShell = document.querySelector('#phone-shell')
 const count = document.querySelector('#slide-count')
 const title = document.querySelector('#slide-title')
 const text = document.querySelector('#slide-text')
+const themeSwitch = document.querySelector('.theme-switch')
 const themeInputs = [...document.querySelectorAll('input[name="theme"]')]
 const themeOptions = [...document.querySelectorAll('.theme-option')]
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
 
 let index = 0
 let theme = getInitialTheme()
@@ -60,7 +62,16 @@ function getInitialTheme() {
     // sessionStorage can be unavailable inside some iframe contexts.
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return systemTheme.matches ? 'dark' : 'light'
+}
+
+function syncThemeOptionOrder() {
+  const order = systemTheme.matches ? ['dark', 'light'] : ['light', 'dark']
+
+  order.forEach((themeName) => {
+    const option = themeOptions.find((item) => item.dataset.themeOption === themeName)
+    if (option) themeSwitch.append(option)
+  })
 }
 
 function setTheme(nextTheme, shouldPersist = true) {
@@ -167,8 +178,9 @@ phoneShell.addEventListener('pointercancel', () => {
   isPointerDown = false
 })
 
-const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
 systemTheme.addEventListener('change', (event) => {
+  syncThemeOptionOrder()
+
   let saved = null
   try {
     saved = window.sessionStorage.getItem('ue-app-slideshow-theme')
@@ -181,6 +193,7 @@ systemTheme.addEventListener('change', (event) => {
   }
 })
 
+syncThemeOptionOrder()
 renderSlides()
 setTheme(theme, false)
 updateSlide()
