@@ -4,7 +4,8 @@ body {
   min-width: 320px;
   height: 100%;
   overflow: hidden;
-  background: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 body {
@@ -30,7 +31,8 @@ label {
   height: min(100vh, var(--showcase-height));
   min-height: 0;
   padding: clamp(14px, 3vw, 34px);
-  background: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .showcase-grid {
