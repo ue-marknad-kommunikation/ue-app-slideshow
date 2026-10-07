@@ -38,14 +38,19 @@ label {
 .showcase-grid {
   display: grid;
   grid-template-columns: minmax(260px, var(--phone-w)) minmax(260px, 450px);
+  grid-template-areas:
+    "device content";
   align-items: center;
   justify-content: center;
+  align-content: center;
   gap: clamp(28px, 7vw, 92px);
+  row-gap: 22px;
   width: min(100%, 1060px);
   height: 100%;
 }
 
 .device-column {
+  grid-area: device;
   display: grid;
   justify-items: center;
   align-content: center;
@@ -168,6 +173,7 @@ label {
   align-items: center;
   gap: 10px;
   width: min(100%, 308px);
+  justify-self: start;
 }
 
 .nav-button {
@@ -206,6 +212,15 @@ label {
   text-align: center;
 }
 
+.content-column {
+  grid-area: content;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 28px;
+  min-width: 0;
+}
+
 .slide-copy {
   display: grid;
   gap: 10px;
@@ -236,6 +251,9 @@ label {
 
   .showcase-grid {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "device"
+      "content";
     align-content: start;
     justify-items: center;
     gap: 16px;
@@ -266,7 +284,22 @@ label {
   .slide-nav {
     grid-template-columns: auto minmax(30px, auto) auto;
     justify-content: center;
+    justify-self: center;
     width: min(100%, 278px);
+  }
+
+  .content-column {
+    gap: 16px;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .content-column .slide-nav {
+    order: 1;
+  }
+
+  .content-column .slide-copy {
+    order: 2;
   }
 
   .nav-button {
